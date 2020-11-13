@@ -67,11 +67,12 @@ class Smartsheet(SmartsheetBase):
 
     API_HEADERS = {"Content-Type": "application/json", "Accept": "application/json"}
 
-    def __init__(self, token: str) -> None:
+    def __init__(self, token: str, proxies: Optional[Dict[str, Any]] = None) -> None:
         super().__init__(token)
 
         self._session = requests.Session()
         self._session.headers.update(**self._headers)
+        self._session.proxies = proxies
 
         self.sheets = SheetCRUD(self)
         self.reports = ReportCRUD(self)
